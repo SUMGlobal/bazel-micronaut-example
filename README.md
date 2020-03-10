@@ -7,5 +7,5 @@
 ## Description
 This is a Kotlin project, utilizing Micronaut, has a single REST endpoint. Your basic `Hello Micronaut/Bazel` project.
 This is only interesting in that it does not use the standard generated Gradle build files from the Micronaut CLI, but instead utilizes
-Bazel. For more on the WHY behind this check out (http://sumglobal.com/2020/03/10/bazel-and-micronaut/(opens in a new tab))
+Bazel. For more on the WHY behind this check out (http://sumglobal.com/2020/03/10/bazel-and-micronaut)
 
