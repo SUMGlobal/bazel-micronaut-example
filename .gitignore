@@ -1,7 +1,7 @@
 .ijwb/
 bazel-bin
 bazel-out
-bazel-pause-resume
+bazel-bazel-micronaut-example
 bazel-testlogs
 .DS_Store
 *.jar
