@@ -1,0 +1,39 @@
+<configuration>
+    <!-- <logger name="io.micronaut.http.client" level="TRACE"/> -->
+    <logger name="io.micronaut.configuration.hibernate.jpa" level="WARN"/>
+    <logger name="io.micronaut.context.condition" level="WARN"/>
+    <logger name="com.sumglobal" level="DEBUG"/>
+
+    <property name="LOG_PATH" value="./logs"/>
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/bazel-micronaut-example.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/archived/pause-resume.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>30MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 30GB, it will delete old archived file -->
+            <totalSizeCap>30GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <!-- <appender-ref ref="FILE-ROLLING" /> -->
+    </root>
+
+</configuration>
