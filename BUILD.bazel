@@ -3,17 +3,24 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain",  "kt_jvm_library")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_plugin")
 
-
+######################################################################
+# rules_kotlin setup
+######################################################################
 
 KOTLIN_LANGUAGE_LEVEL="1.3" 	# "1.1", "1.2", or "1.3"
 JAVA_LANGUAGE_LEVEL="11"  		# "1.6", "1.8", "9", "10", "11", or "12"
 
 define_kt_toolchain(
-    name = "kotlin_toolchain", # registed in the workspace
+    name = "kotlin_toolchain", # register in the workspace
     api_version = KOTLIN_LANGUAGE_LEVEL,
     jvm_target = JAVA_LANGUAGE_LEVEL,
     language_version = KOTLIN_LANGUAGE_LEVEL,
 )
+
+######################################################################
+# Define the "kapt" annotation processors as java_plugins
+# include the dependencies for the processor to run
+######################################################################
 
 java_plugin(
     name = "micronaut_inject_plugin2",
@@ -25,6 +32,10 @@ java_plugin(
         "@maven//:io_micronaut_micronaut_validation",
     ],
 )
+######################################################################
+# Define the "kapt" annotation processors as java_plugins
+# include the dependencies for the processor to run
+######################################################################
 
 java_plugin(
     name = "micronaut_inject_plugin",
@@ -37,6 +48,11 @@ java_plugin(
     ],
 )
 
+######################################################################
+# Define the "kapt" annotation processor outputs as a java_library
+# export the dependencies for the generated code to run
+# usually the same or very similar to the deps in the plugins
+######################################################################
 java_library(
     name = "micronaut_lib",
     exported_plugins = ["micronaut_inject_plugin","micronaut_inject_plugin2"],
@@ -48,6 +64,9 @@ java_library(
     ],
 )
 
+######################################################################
+# The application dependencies, including the resources
+######################################################################
 java_library(
     name = "java_deps",
     resources = glob(["src/main/resources/**/*.xml", "src/main/resources/**/*.yml"]),
@@ -67,6 +86,10 @@ java_library(
     ],
 )
 
+######################################################################
+# The application kotlin code to be compiled, depend on the annotation
+# processor generated code and the java_deps
+######################################################################
 kt_jvm_library(
     name = "app_lib",
     srcs = glob(["src/main/kotlin/**/*.kt"]),
@@ -76,6 +99,10 @@ kt_jvm_library(
     ],
 )
 
+######################################################################
+# Create the application jar file use the _deploy bazel build to
+# create a fat jar for your service
+######################################################################
 java_binary(
     name = "bazel-micronaut-example",
     main_class = "com.sumglobal.Application",
