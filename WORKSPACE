@@ -20,25 +20,30 @@ http_archive(
 
 #load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
-load("@rules_jvm_external//:defs.bzl", "artifact", "maven_install")
+load("@rules_jvm_external//:defs.bzl", "artifact", "maven_install",)
 load("//:dependencies.bzl", "ALL_DEPS")
 
 
 maven_install(
     #default name= "maven" which is referenced in the BUILD files
-    artifacts = ALL_DEPS,
+    artifacts = ALL_DEPS, #defined in dependencies.bzl
     version_conflict_policy = "pinned",
     repositories = [
         # Private repositories are supported through HTTP Basic auth
-        #"http://username:password@localhost:8081/artifactory/my-repository",
+        #"https://username:password@localhost:8081/artifactory/my-repository",
         "https://jcenter.bintray.com/",
         "https://repo1.maven.org/maven2",
         "https://repo.maven.apache.org/maven2",
         "https://maven.wso2.org/nexus/content/repositories/releases/",
     ],
     fetch_sources = True, # Want this to work happily with our IDE
-    generate_compat_repositories = False, # Change to True and uncomment compat_repositories lines below to use alt form alias
+    generate_compat_repositories = False, # Change to True use alt form alias
+    # Want to be sure we pin our versions for better speed, helps to share artifacts across workspaces as well
+    maven_install_json = "//:maven_install.json",
 )
+#loads up the pinned_maven_install and calls it so we use our pinned versions
+load("@maven//:defs.bzl", "pinned_maven_install")
+pinned_maven_install()
 
 # List all artifacts retrieved. Each artifact have both a versioned and unversioned alias
 #bazel query @maven//:all | sort

@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain",  "kt_jvm_library")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain",  "kt_jvm_library", "kt_jvm_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_plugin")
 
 ######################################################################
@@ -107,4 +107,32 @@ java_binary(
     name = "bazel-micronaut-example",
     main_class = "com.sumglobal.Application",
     runtime_deps = [":app_lib"],
+)
+
+
+kt_jvm_test(
+    name = "micronaut_tests",
+    main_class = "org.junit.platform.console.ConsoleLauncher",
+    args = [
+        "--select-package=com.sumglobal",
+    ],
+    srcs = glob(["src/test/kotlin/**/*.kt"]),
+    #resources = glob(["src/test/resources/**/*.xml", "src/test/resources/**/*.yml"]), # Would add this if we needed to add more config, not needed for out test, here for reference
+    deps = [
+        ":app_lib",
+        ":micronaut_lib", # Need this to be sure the Annotation processor is called on our Test code...
+        "@maven//:io_micronaut_test_micronaut_test_junit5",
+        "@maven//:io_micronaut_test_micronaut_test_core", #Bazel requires this, it is brought in transitively in the Gradle build, but called directly in the junit5 impl above
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_jupiter_junit_jupiter_params",
+        "@maven//:org_junit_platform_junit_platform_console",
+    ],
+    runtime_deps = [
+        ":app_lib",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_platform_junit_platform_console",
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:io_micronaut_micronaut_runtime",
+    ],
 )
