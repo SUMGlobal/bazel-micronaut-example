@@ -1,8 +1,8 @@
-_MICRONAUT_VER = "1.3.4"
-_JUNIT_VER = "5.6.1"
+_MICRONAUT_VER = "2.0.1"
+_JUNIT_VER = "5.6.2"
 
 _DEPS = [
-    "org.jetbrains.kotlin:kotlin-stdlib:1.3.71",
+    "org.jetbrains.kotlin:kotlin-stdlib:1.3.72",
     "ch.qos.logback:logback-classic:1.2.3",
     "ch.qos.logback:logback-core:1.2.3",
     "org.slf4j:slf4j-api:1.7.30",
@@ -17,7 +17,7 @@ _DEPS = [
     "io.micronaut:micronaut-inject:%s" % _MICRONAUT_VER,
     "io.micronaut:micronaut-validation:%s" % _MICRONAUT_VER,
     "io.micronaut:micronaut-aop:%s" % _MICRONAUT_VER,
-    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9",
     "io.reactivex.rxjava2:rxkotlin:2.4.0",
     # JUnit 5 Dependencies
     "org.junit.jupiter:junit-jupiter-api:%s" % _JUNIT_VER,
@@ -25,8 +25,8 @@ _DEPS = [
     "org.junit.jupiter:junit-jupiter-engine:%s" % _JUNIT_VER,
     "org.junit.platform:junit-platform-console:1.6.1",
     # Micronaut Testing Dependencies
-    "io.micronaut.test:micronaut-test-junit5:1.1.5",
-    "io.micronaut.test:micronaut-test-core:1.1.5"
+    "io.micronaut.test:micronaut-test-junit5:1.2.2",
+    "io.micronaut.test:micronaut-test-core:1.2.2"
 ]
 
 

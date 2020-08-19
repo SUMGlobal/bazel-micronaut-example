@@ -2,8 +2,8 @@ workspace(name = "bazelmicronautexample")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_JVM_EXTERNAL_TAG = "3.2"
-RULES_JVM_EXTERNAL_SHA = "82262ff4223c5fda6fb7ff8bd63db8131b51b413d26eb49e3131037e79e324af"
+RULES_JVM_EXTERNAL_TAG = "3.3"
+RULES_JVM_EXTERNAL_SHA = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab"
 
 http_archive(
     name = "rules_jvm_external",
@@ -48,15 +48,24 @@ pinned_maven_install()
 # List all artifacts retrieved. Each artifact have both a versioned and unversioned alias
 #bazel query @maven//:all | sort
 
-rules_kotlin_version = "legacy-1.3.0"
-rules_kotlin_sha = "4fd769fb0db5d3c6240df8a9500515775101964eebdf85a3f9f0511130885fde"
+#rules_kotlin_version = "legacy-1.3.0"
+#rules_kotlin_sha = "4fd769fb0db5d3c6240df8a9500515775101964eebdf85a3f9f0511130885fde"
+#http_archive(
+#    name = "io_bazel_rules_kotlin",
+#    urls = ["https://github.com/bazelbuild/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
+#    type = "zip",
+#    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version,
+#    sha256 = rules_kotlin_sha,
+#)
+
+rules_kotlin_version = "legacy-1.4.0-rc3"
+rules_kotlin_sha = "da0e6e1543fcc79e93d4d93c3333378f3bd5d29e82c1bc2518de0dbe048e6598"#"<release sha>"
 http_archive(
     name = "io_bazel_rules_kotlin",
-    urls = ["https://github.com/bazelbuild/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
-    type = "zip",
-    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version,
+    urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/%s/rules_kotlin_release.tgz" % rules_kotlin_version],
     sha256 = rules_kotlin_sha,
 )
+
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
 kotlin_repositories() # if you want the default. Otherwise see custom kotlinc distribution below

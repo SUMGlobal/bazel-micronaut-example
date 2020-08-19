@@ -116,6 +116,7 @@ kt_jvm_test(
     args = [
         "--select-package=com.sumglobal",
     ],
+    size="small",
     srcs = glob(["src/test/kotlin/**/*.kt"]),
     #resources = glob(["src/test/resources/**/*.xml", "src/test/resources/**/*.yml"]), # Would add this if we needed to add more config, not needed for out test, here for reference
     deps = [
