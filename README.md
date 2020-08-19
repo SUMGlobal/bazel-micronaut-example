@@ -18,3 +18,5 @@ In the second post in the series we discuss how to get your Micronaut Tests to w
 end of the file in the section `kt_jvm_test` section. To get the testing ease from your Micronaut project, there are a few "tricks" to
 making it work. To run the tests: `bazel test //:micronaut_tests`. For more of the details of making the tests work, you can check out the second post in the series [Bazel Test, JUnit5 and Micronaut -Growing the relationship](https://sumglobal.com/2020/04/15/bazel-test-with-micronaut/)
 
+## Updates
+- Updated bazel, dependencies and kotlin rule to the latest as of 8/19/2020
