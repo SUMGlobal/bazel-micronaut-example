@@ -38,8 +38,8 @@ java_plugin(
 ######################################################################
 
 java_plugin(
-    name = "micronaut_inject_plugin",
-    processor_class = "io.micronaut.annotation.processing.BeanDefinitionInjectProcessor",
+    name = "micronaut_inject_plugin3",
+    processor_class = "io.micronaut.annotation.processing.AggregatingTypeElementVisitorProcessor",
     deps = [
         "@maven//:io_micronaut_micronaut_inject_java",
         "@maven//:io_micronaut_micronaut_aop",
@@ -48,6 +48,26 @@ java_plugin(
     ],
 )
 
+java_plugin(
+    name = "micronaut_inject_plugin4",
+    processor_class = "io.micronaut.annotation.processing.BeanDefinitionInjectProcessor",
+    deps = [
+        "@maven//:io_micronaut_micronaut_inject_java",
+        "@maven//:io_micronaut_micronaut_aop",
+        "@maven//:io_micronaut_micronaut_inject",
+        "@maven//:io_micronaut_micronaut_validation",
+    ],
+)
+java_plugin(
+    name = "micronaut_inject_plugin",
+    processor_class = "io.micronaut.annotation.processing.ServiceDescriptionProcessor",
+    deps = [
+        "@maven//:io_micronaut_micronaut_inject_java",
+        "@maven//:io_micronaut_micronaut_aop",
+        "@maven//:io_micronaut_micronaut_inject",
+        "@maven//:io_micronaut_micronaut_validation",
+    ],
+)
 ######################################################################
 # Define the "kapt" annotation processor outputs as a java_library
 # export the dependencies for the generated code to run
@@ -55,7 +75,7 @@ java_plugin(
 ######################################################################
 java_library(
     name = "micronaut_lib",
-    exported_plugins = ["micronaut_inject_plugin","micronaut_inject_plugin2"],
+    exported_plugins = ["micronaut_inject_plugin","micronaut_inject_plugin2", "micronaut_inject_plugin3","micronaut_inject_plugin4"],
     exports = [
         "@maven//:io_micronaut_micronaut_inject_java",
         "@maven//:io_micronaut_micronaut_aop",
@@ -78,7 +98,7 @@ java_library(
          "@maven//:io_micronaut_micronaut_http_server_netty",
          "@maven//:io_micronaut_micronaut_runtime",
          "@maven//:io_micronaut_micronaut_core",
-         "@maven//:io_reactivex_rxjava2_rxkotlin",
+         "@maven//:io_reactivex_rxjava3_rxkotlin",
          "@maven//:javax_annotation_javax_annotation_api",
          "@maven//:org_jetbrains_kotlinx_kotlinx_coroutines_core",
          "@maven//:io_micronaut_micronaut_http_client",
